@@ -17,10 +17,10 @@ let mediaRecorder = null;
 let audioChunks = [];
 let isRecording = false;
 
-// Check API key configuration
+// Verify API Key
 function checkApiKey() {
   if (!OPENAI_API_KEY || OPENAI_API_KEY === 'YOUR_OPENAI_API_KEY_HERE') {
-    alert('Please replace "YOUR_OPENAI_API_KEY_HERE" in recorder.js with your actual OpenAI API key!');
+    alert('Please replace "YOUR_OPENAI_API_KEY_HERE" in script.js with your actual OpenAI API key!');
     return false;
   }
   return true;
@@ -47,7 +47,7 @@ micBtn.addEventListener('click', async () => {
         const audioFile = new File([audioBlob], 'recording.webm', { type: 'audio/webm' });
         await transcribeWithWhisper(audioFile);
         
-        // Stop audio track release hardware
+        // Stop audio track hardware usage
         stream.getTracks().forEach(track => track.stop());
       };
 
@@ -154,7 +154,7 @@ translateBtn.addEventListener('click', async () => {
   }
 });
 
-// Revert back to original transcript
+// Revert to original text
 showOriginalBtn.addEventListener('click', () => {
   if (originalSpeechText) {
     outputText.value = originalSpeechText;
@@ -163,7 +163,7 @@ showOriginalBtn.addEventListener('click', () => {
   }
 });
 
-// Copy to Clipboard
+// Copy button
 copyBtn.addEventListener('click', () => {
   if (outputText.value.trim() !== '') {
     navigator.clipboard.writeText(outputText.value);
