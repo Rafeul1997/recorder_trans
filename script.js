@@ -1,7 +1,7 @@
 // HARDCODED OPENAI API KEY
 const OPENAI_API_KEY = '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';
 
-const micBtn = document.getElementById('micBtn');
+const audioFileInput = document.getElementById('audioFileInput');
 const statusText = document.getElementById('statusText');
 const outputText = document.getElementById('outputText');
 
@@ -13,11 +13,8 @@ const sourceLangSelect = document.getElementById('sourceLangSelect');
 const targetLangSelect = document.getElementById('targetLangSelect');
 
 let originalSpeechText = '';
-let mediaRecorder = null;
-let audioChunks = [];
-let isRecording = false;
 
-// Verify API Key
+// Check API key configuration
 function checkApiKey() {
   if (!OPENAI_API_KEY || OPENAI_API_KEY === 'YOUR_OPENAI_API_KEY_HERE') {
     alert('Please replace "YOUR_OPENAI_API_KEY_HERE" in script.js with your actual OpenAI API key!');
@@ -26,50 +23,24 @@ function checkApiKey() {
   return true;
 }
 
-// 1. Live Mic Recording
-micBtn.addEventListener('click', async () => {
+// 1. Upload Audio File and Send to Whisper
+audioFileInput.addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
   if (!checkApiKey()) return;
 
-  if (!isRecording) {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorder = new MediaRecorder(stream);
-      audioChunks = [];
-
-      mediaRecorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          audioChunks.push(event.data);
-        }
-      };
-
-      mediaRecorder.onstop = async () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-        const audioFile = new File([audioBlob], 'recording.webm', { type: 'audio/webm' });
-        await transcribeWithWhisper(audioFile);
-        
-        // Stop audio track hardware usage
-        stream.getTracks().forEach(track => track.stop());
-      };
-
-      mediaRecorder.start();
-      isRecording = true;
-      micBtn.classList.add('listening');
-      statusText.textContent = 'Recording... Click mic to stop & transcribe';
-    } catch (err) {
-      alert('Microphone permission error or device not supported.');
-      console.error(err);
-    }
-  } else {
-    mediaRecorder.stop();
-    isRecording = false;
-    micBtn.classList.remove('listening');
+  if (!file.type.startsWith('audio/')) {
+    alert('Please upload a valid audio file.');
+    return;
   }
+
+  statusText.textContent = `Transcribing "${file.name}"...`;
+  await transcribeWithWhisper(file);
 });
 
 // 2. Transcribe Audio using OpenAI Whisper API
 async function transcribeWithWhisper(audioFile) {
-  statusText.textContent = 'Transcribing with OpenAI Whisper...';
-
   const formData = new FormData();
   formData.append('file', audioFile);
   formData.append('model', 'whisper-1');
@@ -106,7 +77,7 @@ translateBtn.addEventListener('click', async () => {
 
   const textToTranslate = outputText.value.trim();
   if (!textToTranslate) {
-    alert('Please record speech first or enter text!');
+    alert('Please upload an audio file first or enter text!');
     return;
   }
 
