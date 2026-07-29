@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Audio Recorder & Translator</title>
+  <title>Audio File Transcriber & Translator</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="app-container">
-    <h1>Audio Recorder</h1>
-    <p class="subtitle">Record live audio to transcribe and translate</p>
+    <h1>Audio Transcriber</h1>
+    <p class="subtitle">Upload an audio file to transcribe and translate</p>
 
     <!-- Language Selectors -->
     <div class="language-bar">
       <div class="lang-group">
-        <label for="sourceLangSelect">Speaking:</label>
+        <label for="sourceLangSelect">Audio Language:</label>
         <select id="sourceLangSelect">
           <option value="en">English</option>
           <option value="es">Spanish</option>
@@ -50,7 +50,7 @@
 
     <!-- Text Area Wrapper -->
     <div class="textbox-wrapper">
-      <textarea id="outputText" placeholder="Recorded audio transcript will appear here..."></textarea>
+      <textarea id="outputText" placeholder="Uploaded audio transcript will appear here..."></textarea>
       <button id="copyBtn" class="copy-btn">Copy Text</button>
     </div>
 
@@ -60,14 +60,15 @@
       <button id="showOriginalBtn" class="secondary-btn" style="display: none;">↩ Show Original</button>
     </div>
 
-    <!-- Recording Control -->
+    <!-- Upload Controls -->
     <div class="controls">
-      <button id="micBtn" class="mic-btn" aria-label="Toggle Recording" title="Start Recording">
-        <svg class="mic-icon" viewBox="0 0 24 24" width="32" height="32">
-          <path fill="currentColor" d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+      <label for="audioFileInput" class="upload-btn" title="Upload Audio File">
+        <svg viewBox="0 0 24 24" width="32" height="32">
+          <path fill="currentColor" d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/>
         </svg>
-      </button>
-      <span id="statusText" class="status-text">Click mic to start recording</span>
+        <input type="file" id="audioFileInput" accept="audio/*" style="display: none;">
+      </label>
+      <span id="statusText" class="status-text">Click icon to upload an audio file</span>
     </div>
   </div>
 
