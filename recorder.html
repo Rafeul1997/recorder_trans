@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Recorder & Translator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <h1>Audio Recorder</h1>
+    <p class="subtitle">Record live audio to transcribe and translate</p>
+
+    <!-- Language Selectors -->
+    <div class="language-bar">
+      <div class="lang-group">
+        <label for="sourceLangSelect">Speaking:</label>
+        <select id="sourceLangSelect">
+          <option value="en">English</option>
+          <option value="es">Spanish</option>
+          <option value="fr">French</option>
+          <option value="de">German</option>
+          <option value="hi">Hindi</option>
+          <option value="zh">Chinese</option>
+          <option value="ja">Japanese</option>
+          <option value="ar">Arabic</option>
+          <option value="pt">Portuguese</option>
+          <option value="ru">Russian</option>
+        </select>
+      </div>
+
+      <span class="arrow">➜</span>
+
+      <div class="lang-group">
+        <label for="targetLangSelect">Translate to:</label>
+        <select id="targetLangSelect">
+          <option value="Spanish">Spanish</option>
+          <option value="French">French</option>
+          <option value="German">German</option>
+          <option value="English">English</option>
+          <option value="Hindi">Hindi</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Japanese">Japanese</option>
+          <option value="Arabic">Arabic</option>
+          <option value="Portuguese">Portuguese</option>
+          <option value="Russian">Russian</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Output Text Area -->
+    <div class="textbox-wrapper">
+      <textarea id="outputText" placeholder="Recorded audio transcript will appear here..."></textarea>
+      <button id="copyBtn" class="copy-btn">Copy Text</button>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button id="translateBtn" class="translate-btn">🌐 Translate Text</button>
+      <button id="showOriginalBtn" class="secondary-btn" style="display: none;">↩ Show Original</button>
+    </div>
+
+    <!-- Record Control -->
+    <div class="controls">
+      <button id="micBtn" class="mic-btn" aria-label="Toggle Recording" title="Start Recording">
+        <svg class="mic-icon" viewBox="0 0 24 24" width="32" height="32">
+          <path fill="currentColor" d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+        </svg>
+      </button>
+      <span id="statusText" class="status-text">Click mic to start recording</span>
+    </div>
+  </div>
+
+  <script src="recorder.js"></script>
+</body>
+</html>
